@@ -17,22 +17,22 @@ vector<int> LRUCache::processRequests(vector<int> requestsNo)
     vector<int> cacheAux;
     vector<int>::iterator it, it2;
 
-    //Parcurge vectorul <requestsNo> si verifica daca
+    //Iterates through <requestsNo> and verifies if
     for(it = requestsNo.begin(); it != requestsNo.end(); it++)
     {
-        //In <cacheAux> exista vreun request, daca nu, creeaza unul, cu valoarea primului element din <requestsNo>
+        //There is any request in <cacheAux>, if not, it creates one with the value of the first element of <requestsNo>
         if(cacheAux.size() == 0)
             cacheAux.push_back(*it);
         
-        //In <cacheAux> exista deja cel putin un request
+        //There is at least one request in <cacheAux>
         else
         {
-            //Variabila pentru a memora daca valoarea din <requestsNo> este deja prezenta in <cacheAux>
+            //Variable used to verify if the value in <requestsNo> already exists in <cacheAux>
             gasit = 0;
 
             for(it2 = cacheAux.begin(); it2 != cacheAux.end(); ++it2)
             {
-                //Daca e gasit, sterge valoarea respectiva din <cacheAux> si o adauga la sfarsit
+                //If found, it deletes that value from <cacheAux> and adds it to the end
                 if(*it == *it2)
                 {
                     gasit = 1;
@@ -44,10 +44,10 @@ vector<int> LRUCache::processRequests(vector<int> requestsNo)
 
             if(gasit == 0)
             {
-                //Daca nu se regaseste in <cacheAux> si <cacheAux> nu si-a atins capacitatea maxima, este introdusa noua valoare la sfarsitul listei
+                //If not found in <cacheAux> and <cacheAux> didn't reach its maximum capacity, the new value is added at the end of the list
                 if(cacheAux.size() < capacity)
                     cacheAux.push_back(*it);
-               //Daca <cacheAux> este la capacitatea maxima, sterge primul element din lista si adauga noua valoare la sfarsit(primul element fiind acum al doilea de dinainte de a se sterge)
+               //If <cacheAux> is at its maximum capacity, deletes the first element and adds the new element at the end(shifting the entire list so the old 2nd element is now the 1st)
                else
                 {
                     cacheAux.erase(cacheAux.begin());
@@ -59,7 +59,7 @@ vector<int> LRUCache::processRequests(vector<int> requestsNo)
         }
     }
 
-    //Parcurge <cacheAux> in ordine inversa si introduce fiecare element in lista <lru>
+    //Iterates through <cacheAux> backwards and adds each element to the <lru> list
     for(itR = cacheAux.rbegin(); itR != cacheAux.rend(); ++itR)
         lru.push_back(*itR);
 
